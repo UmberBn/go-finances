@@ -9,7 +9,7 @@ import {
 } from '@expo-google-fonts/poppins';
 
 import theme from './src/global/styles/theme';
-import Dashboard from './src/screens/Dashboard';
+import Dashboard from './src/screens/Register';
 
 
 export default function App() {
