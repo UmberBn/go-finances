@@ -1,7 +1,8 @@
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { RFValue } from "react-native-responsive-fontsize";
 import styled from "styled-components/native";
 
-export const Container = styled.View`
+export const Container = styled(GestureHandlerRootView)`
   background-color: ${({ theme }) => theme.colors.background};
   flex: 1;
 `;
@@ -39,4 +40,6 @@ export const TransactionButtonsArea = styled.View`
   width: 100%;
   flex-direction: row;
   justify-content: space-between;
+  margin-top: 8px;
+  margin-bottom: 16px;
 `
