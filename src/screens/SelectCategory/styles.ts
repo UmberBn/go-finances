@@ -7,7 +7,7 @@ interface IActiveCategory {
   isActive: boolean;
 }
 
-export const Category = styled(RectButton)<IActiveCategory>`
+export const Category = styled.TouchableOpacity<IActiveCategory>`
   width: 100%;
   padding: ${RFValue(15)}px;
 

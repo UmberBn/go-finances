@@ -1,7 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Alert, Keyboard, Modal, TouchableWithoutFeedback } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 import { useForm } from "react-hook-form";
+import uuid from "react-native-uuid";
 import * as Yup from "yup";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { yupResolver } from "@hookform/resolvers/yup";
 import Button from "../../components/Form/Button/Index";
 import CategorySelect from "../../components/Form/CategorySelectButton";
@@ -17,6 +20,8 @@ import {
   Fields,
   TransactionButtonsArea,
 } from "./styles";
+import { GoFinancesRoutesList } from "../../routes/routes";
+import { BottomTabNavigationProp } from "@react-navigation/bottom-tabs";
 
 interface RegisterForm {
   [name: string]: string;
@@ -36,10 +41,13 @@ const Register: React.FC = () => {
     key: "category",
   });
   const [categoryModal, setCategoryModal] = useState(false);
+  const navigation =
+    useNavigation<BottomTabNavigationProp<GoFinancesRoutesList>>();
 
   const {
     control,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm({
     resolver: yupResolver(schemaValidation),
@@ -59,24 +67,48 @@ const Register: React.FC = () => {
     return {};
   };
 
-  const handleRegister = (form: RegisterForm) => {
+  const handleRegister = async (form: RegisterForm) => {
+    console.log("xd")
     const isValidForm = validateForm();
 
     if (isValidForm?.error) {
       Alert.alert("Ops!", isValidForm.error);
     } else {
       const data = {
+        id: String(uuid.v4()),
         name: form.name,
         amount: form.amount,
         category: category.key,
         current,
+        date: new Date(),
       };
+      try {
+        const dataKey = "@gofinaces:transactions";
+        const currentTransactions = await AsyncStorage.getItem(dataKey);
+        const currentData = currentTransactions
+          ? JSON.parse(currentTransactions)
+          : [];
+        await AsyncStorage.setItem(
+          dataKey,
+          JSON.stringify([...currentData, data])
+        );
+
+        setCurrent(null);
+        setCategory({
+          key: "category",
+          name: "Categoria",
+        });
+        reset();
+
+        navigation.navigate("Listagem");
+      } catch (e) {
+        Alert.alert("Erro ao tentar salvar");
+        console.log(e);
+      }
 
       console.log(data);
     }
   };
-
-  const onSubmit = () => handleSubmit(handleRegister);
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -121,11 +153,7 @@ const Register: React.FC = () => {
               onPress={() => setCategoryModal(true)}
             />
           </Fields>
-          <Button
-            title="Salvar"
-            onPress={onSubmit}
-            rippleColor={"grey"}
-          />
+          <Button title="Salvar" onPress={handleSubmit(handleRegister)} />
         </Form>
         <Modal
           visible={categoryModal}

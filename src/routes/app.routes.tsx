@@ -5,8 +5,9 @@ import Dashboard from "../screens/Dashboard";
 import Register from "../screens/Register";
 import { useTheme } from "styled-components/native";
 import { Platform } from "react-native";
+import { GoFinancesRoutesList } from "./routes";
 
-const { Navigator, Screen } = createBottomTabNavigator();
+const { Navigator, Screen } = createBottomTabNavigator<GoFinancesRoutesList>();
 
 export function AppRoutes() {
   const theme = useTheme();
