@@ -75,6 +75,9 @@ const Register: React.FC = () => {
       console.log(data);
     }
   };
+
+  const onSubmit = () => handleSubmit(handleRegister);
+
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
       <Container>
@@ -118,7 +121,11 @@ const Register: React.FC = () => {
               onPress={() => setCategoryModal(true)}
             />
           </Fields>
-          <Button title="Salvar" onPress={handleSubmit(handleRegister)} />
+          <Button
+            title="Salvar"
+            onPress={onSubmit}
+            rippleColor={"grey"}
+          />
         </Form>
         <Modal
           visible={categoryModal}

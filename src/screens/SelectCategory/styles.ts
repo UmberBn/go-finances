@@ -1,22 +1,24 @@
 import styled, { css } from "styled-components/native";
 import { Feather } from "@expo/vector-icons";
 import { RFValue } from "react-native-responsive-fontsize";
-import { GestureHandlerRootView } from "react-native-gesture-handler";
+import { RectButton } from "react-native-gesture-handler";
 
 interface IActiveCategory {
   isActive: boolean;
 }
 
-export const Category = styled.TouchableOpacity<IActiveCategory>`
+export const Category = styled(RectButton)<IActiveCategory>`
   width: 100%;
   padding: ${RFValue(15)}px;
 
   flex-direction: row;
   align-items: center;
 
-  ${({ isActive, theme }) => isActive && css`
-    background-color: ${theme.colors.secondary_light};
-  `}
+  ${({ isActive, theme }) =>
+    isActive &&
+    css`
+      background-color: ${theme.colors.secondary_light};
+    `}
 `;
 
 export const Icon = styled(Feather)`

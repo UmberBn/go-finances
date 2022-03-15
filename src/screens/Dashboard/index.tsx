@@ -1,9 +1,11 @@
-import React from 'react';
-import { getBottomSpace } from 'react-native-iphone-x-helper';
-import HightligthCard from '../../components/HightligthCard';
-import TransactionCard, { TransactionCardProps } from '../../components/TransactionCard';
+import React from "react";
+import { getBottomSpace } from "react-native-iphone-x-helper";
+import HightligthCard from "../../components/HightligthCard";
+import TransactionCard, {
+  TransactionCardProps,
+} from "../../components/TransactionCard";
 
-import { 
+import {
   Container,
   Header,
   UserWrapper,
@@ -17,7 +19,8 @@ import {
   Transactions,
   Title,
   TransactionList,
-} from './styles';
+  LogoutButton,
+} from "./styles";
 
 export interface DataListProps extends TransactionCardProps {
   id: number;
@@ -28,7 +31,7 @@ const Dashboard: React.FC = () => {
     {
       id: 1,
       title: "Desenvolvimento de site",
-      type: 'positive',
+      type: "positive",
       amount: "R$ 12.000,00",
       category: {
         name: "Vendas",
@@ -39,7 +42,7 @@ const Dashboard: React.FC = () => {
     {
       id: 2,
       title: "Alimentação",
-      type: 'negative',
+      type: "negative",
       amount: "R$ 2.000,00",
       category: {
         name: "Alimentação",
@@ -50,52 +53,52 @@ const Dashboard: React.FC = () => {
     {
       id: 3,
       title: "Aluguel",
-      type: 'positive',
+      type: "positive",
       amount: "R$ 12.000,00",
       category: {
         name: "Casa",
         icon: "dollar-sign",
       },
       date: "13/04/2020",
-    }
-  ]
+    },
+  ];
   return (
     <Container>
       <Header>
         <UserWrapper>
           <UserInfo>
-            <Photo 
-              source={{uri: 'https://avatars.githubusercontent.com/u/49960885?v=4'}}
+            <Photo
+              source={{
+                uri: "https://avatars.githubusercontent.com/u/49960885?v=4",
+              }}
             />
             <User>
-              <UserGreeting>
-                Olá,
-              </UserGreeting>
-              <UserName>
-                Humberto
-              </UserName>
+              <UserGreeting>Olá,</UserGreeting>
+              <UserName>Humberto</UserName>
             </User>
           </UserInfo>
-          <Icon name="power"/>
+          <LogoutButton onPress={() => {}}>
+            <Icon name="power" />
+          </LogoutButton>
         </UserWrapper>
       </Header>
       <HightligthCards>
         <HightligthCard
-          title='Entradas'
-          type='up'
-          amount={'R$ 17.400,00'}
+          title="Entradas"
+          type="up"
+          amount={"R$ 17.400,00"}
           lastTransaction="Última entrada dia 13 de abril"
         />
-        <HightligthCard 
-          title='Saídas'
+        <HightligthCard
+          title="Saídas"
           type="down"
-          amount={'R$ 17.400,00'}
+          amount={"R$ 17.400,00"}
           lastTransaction="Última entrada dia 13 de abril"
         />
-        <HightligthCard 
-          title='Total'
+        <HightligthCard
+          title="Total"
           type="total"
-          amount='R$ 17.400,00'
+          amount="R$ 17.400,00"
           lastTransaction="Última entrada dia 13 de abril"
         />
       </HightligthCards>
@@ -106,11 +109,11 @@ const Dashboard: React.FC = () => {
           keyExtractor={(item) => `${item.id}`}
           renderItem={({ item }) => <TransactionCard data={item} />}
           showsVerticalScrollIndicator={false}
-          contentContainerStyle={{paddingBottom: getBottomSpace() || 20}}
+          contentContainerStyle={{ paddingBottom: getBottomSpace() || 20 }}
         />
       </Transactions>
     </Container>
   );
-}
+};
 
 export default Dashboard;
